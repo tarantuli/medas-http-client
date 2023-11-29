@@ -81,7 +81,6 @@ readonly class RequestController
             return;
         }
 
-
         if ($request->body->type) {
             $request->headers['Content-Type'] = $request->body->type;
         }
