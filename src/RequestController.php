@@ -85,7 +85,6 @@ readonly class RequestController
             $request->headers['Content-Type'] = $request->body->type;
         }
 
-
         curl_setopt(
             $this->handle,
             CURLOPT_POSTFIELDS,
