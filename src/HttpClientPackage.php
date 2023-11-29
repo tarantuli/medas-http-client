@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Medas\Placeholder;
+namespace Medas\HttpClient;
 
 use Medas\Core\AsSingleton;
 use Medas\ServiceManager\BasePackage;
 
-class PlaceholderPackage extends BasePackage
+class HttpClientPackage extends BasePackage
 {
     use AsSingleton;
 
