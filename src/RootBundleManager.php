@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Medas\HttpClient;
+
+use Medas\Core\Attributes\{ConfigValue, Service};
+
+#[Service]
+readonly class RootBundleManager
+{
+    public function __construct(
+        #[ConfigValue(ConfigOptions\RootBundleDirectory::class)]
+        private string $directory,
+    )
+    {
+    }
+
+    public function path(): string
+    {
+        $filename = $this->directory . '/cacert.pem';
+
+        if (!file_exists($filename)) {
+            file_put_contents($filename, file_get_contents('https://curl.haxx.se/ca/cacert.pem'));
+        }
+
+        return $filename;
+    }
+}
