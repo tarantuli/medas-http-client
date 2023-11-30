@@ -30,4 +30,12 @@ readonly class SimpleRequests
 
         return $this->requestController->execute($request);
     }
+
+    public function delete(string $url, array $queryArguments = []): Response
+    {
+        $request = new Request($url, 'DELETE');
+        $request->queryArguments = $queryArguments;
+
+        return $this->requestController->execute($request);
+    }
 }
