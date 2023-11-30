@@ -37,6 +37,6 @@ readonly class RootBundleDirectory implements ConfigOption
 
     public function default(): string
     {
-        return sys_get_temp_dir();
+        return 'var/cache';
     }
 }

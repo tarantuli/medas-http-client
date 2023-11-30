@@ -12,13 +12,14 @@ readonly class RequestController
     private \CurlHandle $handle;
 
     public function __construct(
-        private BodyHandler   $bodyHandler,
-        private HeaderHandler $headerHandler,
-        private CookieHandler $cookieHandler,
-        RootBundleManager     $rootBundleManager,
+        private BodyHandler        $bodyHandler,
+        private HeaderHandler      $headerHandler,
+        private CookieHandler      $cookieHandler,
+        private ResponseController $responseController,
+        RootBundleManager          $rootBundleManager,
 
         #[ConfigValue(ConfigOptions\CookieJarFile::class)]
-        string | null         $cookieJarFile,
+        string|null                $cookieJarFile,
     )
     {
         $this->handle = curl_init();
@@ -115,22 +116,15 @@ readonly class RequestController
     private function fetch(): Response
     {
         $response = curl_exec($this->handle);
-
-        // Get response information
         $info = curl_getinfo($this->handle);
-        $responseCode = $info['http_code'];
 
-        if ($responseCode === 307) {
+        if ($info['http_code'] === 307) {
             $this->setUrl($info['url']);
 
             return $this->fetch();
         }
 
-        // Extract the headers from the response
-        $header = substr($response, 0, $info['header_size'] - 4);
-        $body = substr($response, $info['header_size']);
-
-        return new Response($responseCode, $body, $header, $info);
+        return $this->responseController->create($response, $info);
     }
 
     private function setCookies(Request $request): void
