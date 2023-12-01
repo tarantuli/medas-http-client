@@ -124,7 +124,7 @@ readonly class RequestController
             return $this->fetch();
         }
 
-        return $this->responseController->create($response, $info);
+        return $this->responseController->create($response === false ? '' : $response, $info);
     }
 
     private function setCookies(Request $request): void
