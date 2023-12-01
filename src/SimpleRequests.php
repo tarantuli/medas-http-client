@@ -25,7 +25,7 @@ readonly class SimpleRequests
 
     public function post(string $url, mixed $body, string $contentType = 'application/json'): Response
     {
-        $request = new Request($url);
+        $request = new Request($url, 'POST');
         $request->body = new Body($body, $contentType);
 
         return $this->requestController->execute($request);

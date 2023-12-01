@@ -9,6 +9,12 @@ use Medas\Core\Attributes\Service;
 #[Service]
 readonly class BodyHandler
 {
+    public function __construct(
+        private Json\JsonEncoder $jsonEncoder,
+    )
+    {
+    }
+
     public function toString(Body $body): string
     {
         if (is_string($body->content)) {
@@ -23,17 +29,17 @@ readonly class BodyHandler
 
         switch ($contentType) {
             case 'application/x-www-form-urlencoded':
-                return http_build_query($body);
+                return http_build_query($body->content);
 
             case 'text/json':
             case 'application/json':
-                return json_encode($body, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+                return $this->jsonEncoder->encode($body->content);
         }
 
         throw new Exceptions\ContentTypeNotImplemented($contentType);
     }
 
-    public function parseString(string $rawBody, string $contentType): mixed
+    public function parseString(string $rawBody, string|null $contentType): mixed
     {
         switch ($this->stripCharset($contentType)) {
             case 'application/json':
@@ -42,7 +48,7 @@ readonly class BodyHandler
                     $rawBody = substr($rawBody, 1);
                 }
 
-                return json_decode($rawBody, true, flags: JSON_THROW_ON_ERROR);
+                return $this->jsonEncoder->decode($rawBody);
 
             case 'application/x-www-form-urlencoded':
                 parse_str($rawBody, $body);
@@ -54,8 +60,12 @@ readonly class BodyHandler
         }
     }
 
-    private function stripCharset(string $contentType): string
+    private function stripCharset(string|null $contentType): string|null
     {
+        if ($contentType === null) {
+            return null;
+        }
+
         if (false !== $pos = strpos($contentType, ';')) {
             $contentType = substr($contentType, 0, $pos);
         }
