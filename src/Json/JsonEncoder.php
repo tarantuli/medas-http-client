@@ -18,7 +18,9 @@ readonly class JsonEncoder
     public function encode(mixed $data): string
     {
         if (is_array($data)) {
-            array_walk_recursive($data, $this->stringProtector->encode(...));
+            array_walk_recursive($data, function (&$value) {
+                $value = $this->stringProtector->encode($value);
+            });
         }
         else {
             $data = $this->stringProtector->encode($data);
@@ -32,7 +34,9 @@ readonly class JsonEncoder
         $data = json_decode($string, associative: true, flags: JSON_THROW_ON_ERROR);
 
         if (is_array($data)) {
-            array_walk_recursive($data, $this->stringProtector->decode(...));
+            array_walk_recursive($data, function (&$value) {
+                $value = $this->stringProtector->decode($value);
+            });
         }
         else {
             $data = $this->stringProtector->decode($data);
