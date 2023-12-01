@@ -10,6 +10,7 @@ use Medas\Core\Attributes\Service;
 readonly class StringProtector
 {
     private const ENCODING_PREFIX = 'b64:';
+    private const PREFIX_LENGTH = 4;
 
     public function encode(mixed $value): mixed
     {
@@ -31,7 +32,7 @@ readonly class StringProtector
         }
 
         if (str_starts_with($value, self::ENCODING_PREFIX)) {
-            $value = base64_decode(substr($value, 7), true);
+            $value = base64_decode(substr($value, self::PREFIX_LENGTH), true);
         }
 
         return $value;
