@@ -116,6 +116,11 @@ readonly class RequestController
     private function fetch(): Response
     {
         $response = curl_exec($this->handle);
+
+        if ($response === false) {
+            throw new Exceptions\CurlError(curl_errno($this->handle), curl_error($this->handle));
+        }
+
         $info = curl_getinfo($this->handle);
 
         if ($info['http_code'] === 307) {
@@ -124,7 +129,7 @@ readonly class RequestController
             return $this->fetch();
         }
 
-        return $this->responseController->create($response === false ? '' : $response, $info);
+        return $this->responseController->create($response, $info);
     }
 
     private function setCookies(Request $request): void

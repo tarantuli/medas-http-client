@@ -26,6 +26,6 @@ readonly class RootBundleManager
             file_put_contents($filename, file_get_contents('https://curl.haxx.se/ca/cacert.pem'));
         }
 
-        return $filename;
+        return realpath($filename);
     }
 }
