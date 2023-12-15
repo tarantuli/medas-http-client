@@ -12,8 +12,8 @@
     "prefer-stable": true,
     "require": {
         "morphp/medas-core": "dev-dev",
-        "ext-curl": "*",
-        "ext-mbstring": "*"
+        "morphp/medas-json": "dev-dev",
+        "ext-curl": "*"
     },
     "require-dev": {
         "morphp/medas-service-manager": "dev-dev",

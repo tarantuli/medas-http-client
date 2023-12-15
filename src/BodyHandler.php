@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Medas\HttpClient;
 
 use Medas\Core\Attributes\Service;
+use Medas\Json\JsonEncoder;
 
 #[Service]
 readonly class BodyHandler
 {
     public function __construct(
-        private Json\JsonEncoder $jsonEncoder,
+        private JsonEncoder $jsonEncoder,
     )
     {
     }

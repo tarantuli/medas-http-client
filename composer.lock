@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15592a9df1ecfd3cda71a3aff2bd515a",
+    "content-hash": "72eb34c2e5ab1b70f0641c241ff136f4",
     "packages": [
         {
             "name": "morphp/medas-core",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-core.git",
-                "reference": "9a6535591c234d0940e9ab4d467fa07c0b393a55"
+                "reference": "b2c61348991fe2719c9e13a9bbd2a371913bdc47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/9a6535591c234d0940e9ab4d467fa07c0b393a55",
-                "reference": "9a6535591c234d0940e9ab4d467fa07c0b393a55",
+                "url": "https://api.github.com/repos/tarantuli/medas-core/zipball/b2c61348991fe2719c9e13a9bbd2a371913bdc47",
+                "reference": "b2c61348991fe2719c9e13a9bbd2a371913bdc47",
                 "shasum": ""
             },
             "require": {
@@ -51,7 +51,49 @@
                 "source": "https://github.com/tarantuli/medas-core/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-core/issues"
             },
-            "time": "2023-11-29T13:44:56+00:00"
+            "time": "2023-12-12T10:09:41+00:00"
+        },
+        {
+            "name": "morphp/medas-json",
+            "version": "dev-dev",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:tarantuli/medas-json.git",
+                "reference": "36bae3558a1d87c6500cc1e8d8eac7c11ee4b0ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tarantuli/medas-json/zipball/36bae3558a1d87c6500cc1e8d8eac7c11ee4b0ab",
+                "reference": "36bae3558a1d87c6500cc1e8d8eac7c11ee4b0ab",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "morphp/medas-core": "dev-dev"
+            },
+            "require-dev": {
+                "morphp/medas-service-manager": "dev-dev",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Medas\\Json\\": "src/",
+                    "Medas\\JsonTest\\": "tests/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Patrick Morpey",
+                    "email": "patrick@morphp.nl"
+                }
+            ],
+            "description": "Medas JSON",
+            "support": {
+                "source": "https://github.com/tarantuli/medas-json/tree/dev",
+                "issues": "https://github.com/tarantuli/medas-json/issues"
+            },
+            "time": "2023-12-15T14:35:53+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -181,12 +223,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-console.git",
-                "reference": "616a6738d93b89e16f36cc1bdf39701ed7d87ba5"
+                "reference": "494e8c6b17c0e7da5dce50353eed20ef67421264"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-console/zipball/616a6738d93b89e16f36cc1bdf39701ed7d87ba5",
-                "reference": "616a6738d93b89e16f36cc1bdf39701ed7d87ba5",
+                "url": "https://api.github.com/repos/tarantuli/medas-console/zipball/494e8c6b17c0e7da5dce50353eed20ef67421264",
+                "reference": "494e8c6b17c0e7da5dce50353eed20ef67421264",
                 "shasum": ""
             },
             "require": {
@@ -219,7 +261,7 @@
                 "source": "https://github.com/tarantuli/medas-console/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-console/issues"
             },
-            "time": "2023-11-10T10:06:30+00:00"
+            "time": "2023-12-07T14:48:24+00:00"
         },
         {
             "name": "morphp/medas-object-instantiator",
@@ -268,12 +310,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-service-manager.git",
-                "reference": "9086ab6c40fee20472cc8573ef07c992a3557aca"
+                "reference": "8e6c552cf83638f234c517fc813d10ef75db9ce0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-service-manager/zipball/9086ab6c40fee20472cc8573ef07c992a3557aca",
-                "reference": "9086ab6c40fee20472cc8573ef07c992a3557aca",
+                "url": "https://api.github.com/repos/tarantuli/medas-service-manager/zipball/8e6c552cf83638f234c517fc813d10ef75db9ce0",
+                "reference": "8e6c552cf83638f234c517fc813d10ef75db9ce0",
                 "shasum": ""
             },
             "require": {
@@ -307,7 +349,7 @@
                 "source": "https://github.com/tarantuli/medas-service-manager/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-service-manager/issues"
             },
-            "time": "2023-11-20T10:49:36+00:00"
+            "time": "2023-12-11T13:59:14+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -370,16 +412,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.17.1",
+            "version": "v4.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "a6303e50c90c355c7eeee2c4a8b27fe8dc8fef1d"
+                "reference": "1bcbb2179f97633e98bbbc87044ee2611c7d7999"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/a6303e50c90c355c7eeee2c4a8b27fe8dc8fef1d",
-                "reference": "a6303e50c90c355c7eeee2c4a8b27fe8dc8fef1d",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/1bcbb2179f97633e98bbbc87044ee2611c7d7999",
+                "reference": "1bcbb2179f97633e98bbbc87044ee2611c7d7999",
                 "shasum": ""
             },
             "require": {
@@ -420,9 +462,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.17.1"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.18.0"
             },
-            "time": "2023-08-13T19:53:39+00:00"
+            "time": "2023-12-10T21:03:43+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -856,16 +898,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.13",
+            "version": "9.6.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f3d767f7f9e191eab4189abe41ab37797e30b1be"
+                "reference": "05017b80304e0eb3f31d90194a563fd53a6021f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f3d767f7f9e191eab4189abe41ab37797e30b1be",
-                "reference": "f3d767f7f9e191eab4189abe41ab37797e30b1be",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/05017b80304e0eb3f31d90194a563fd53a6021f1",
+                "reference": "05017b80304e0eb3f31d90194a563fd53a6021f1",
                 "shasum": ""
             },
             "require": {
@@ -939,7 +981,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.13"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.15"
             },
             "funding": [
                 {
@@ -955,7 +997,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-09-19T05:39:22+00:00"
+            "time": "2023-12-01T16:55:19+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -1976,11 +2018,14 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "morphp/medas-core": 20,
+        "morphp/medas-json": 20,
         "morphp/medas-service-manager": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-curl": "*"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
 }
