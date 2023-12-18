@@ -18,6 +18,7 @@ readonly class SimpleRequests
     public function get(string $url, array $queryArguments = []): Response
     {
         $request = new Request($url);
+
         $request->queryArguments = $queryArguments;
 
         return $this->requestController->execute($request);
@@ -26,6 +27,7 @@ readonly class SimpleRequests
     public function post(string $url, mixed $body, string $contentType = 'application/json'): Response
     {
         $request = new Request($url, 'POST');
+
         $request->body = new Body($body, $contentType);
 
         return $this->requestController->execute($request);
@@ -34,6 +36,7 @@ readonly class SimpleRequests
     public function delete(string $url, array $queryArguments = []): Response
     {
         $request = new Request($url, 'DELETE');
+
         $request->queryArguments = $queryArguments;
 
         return $this->requestController->execute($request);

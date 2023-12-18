@@ -123,7 +123,7 @@ readonly class RequestController
 
         $info = curl_getinfo($this->handle);
 
-        if ($info['http_code'] === 307) {
+        if ($info['http_code'] === ResponseCodes::TEMPORARY_REDIRECT) {
             $this->setUrl($info['url']);
 
             return $this->fetch();
