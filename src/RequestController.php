@@ -56,7 +56,11 @@ readonly class RequestController
         $this->setCookies($request);
         $this->setTimeouts($request);
 
-        return $this->fetch();
+        $response = $this->fetch();
+
+        $this->checkForErrors($request, $response);
+
+        return $response;
     }
 
     private function setMethod(Request $request): void
@@ -139,5 +143,16 @@ readonly class RequestController
             CURLOPT_COOKIE,
             $this->cookieHandler->toString($request->cookies)
         );
+    }
+
+    private function checkForErrors(Request $request, Response $response): void
+    {
+        if ($request->throwExceptionOn4xx && $response->code >= 400 && $response->code <= 499) {
+            throw new Exceptions\BadRequest($response);
+        }
+
+        if ($request->throwExceptionOn5xx && $response->code >= 500 && $response->code <= 599) {
+            throw new Exceptions\InternalServerError($response);
+        }
     }
 }

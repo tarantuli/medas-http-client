@@ -12,6 +12,8 @@ class Request
     public Body|null $body = null;
     public int|null /** milliseconds */ $connectionTimeout = null;
     public int|null /** milliseconds */ $totalRequestTimeout = null;
+    public bool $throwExceptionOn4xx = true;
+    public bool $throwExceptionOn5xx = true;
 
     public function __construct(
         public string $url,
