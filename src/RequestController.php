@@ -68,16 +68,6 @@ readonly class RequestController
         curl_setopt($this->handle, CURLOPT_CUSTOMREQUEST, strtoupper($request->method));
     }
 
-    private function setUrl(Request $request): void
-    {
-        if ($request->queryArguments) {
-            $request->url .= (str_contains($request->url, '?') ? '&' : '?')
-                . http_build_query($request->queryArguments);
-        }
-
-        curl_setopt($this->handle, CURLOPT_URL, $request->url);
-    }
-
     private function setBody(Request $request): void
     {
         if ($request->body === null) {
@@ -103,6 +93,15 @@ readonly class RequestController
             $this->handle,
             CURLOPT_HTTPHEADER,
             $this->headerHandler->compile($request->headers)
+        );
+    }
+
+    private function setCookies(Request $request): void
+    {
+        curl_setopt(
+            $this->handle,
+            CURLOPT_COOKIE,
+            $this->cookieHandler->toString($request->cookies)
         );
     }
 
@@ -136,13 +135,14 @@ readonly class RequestController
         return $this->responseController->create($response, $info);
     }
 
-    private function setCookies(Request $request): void
+    private function setUrl(Request $request): void
     {
-        curl_setopt(
-            $this->handle,
-            CURLOPT_COOKIE,
-            $this->cookieHandler->toString($request->cookies)
-        );
+        if ($request->queryArguments) {
+            $request->url .= (str_contains($request->url, '?') ? '&' : '?')
+                . http_build_query($request->queryArguments);
+        }
+
+        curl_setopt($this->handle, CURLOPT_URL, $request->url);
     }
 
     private function checkForErrors(Request $request, Response $response): void
