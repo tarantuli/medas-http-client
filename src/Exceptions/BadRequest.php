@@ -20,6 +20,6 @@ class BadRequest extends BaseException
 
     public function pattern(): string
     {
-        return '%u %s: %s';
+        return '%s %s: %s';
     }
 }

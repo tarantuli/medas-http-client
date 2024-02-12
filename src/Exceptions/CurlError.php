@@ -15,6 +15,6 @@ class CurlError extends BaseException
 
     public function pattern(): string
     {
-        return 'cURL error: [%u] %s';
+        return 'cURL error: [%s] %s';
     }
 }
