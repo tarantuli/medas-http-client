@@ -13,7 +13,7 @@ class BadRequest extends BaseException
     {
         parent::__construct(
             $response->code,
-            ResponseCodes::RESPONSE_TEXTS[$response->code],
+            ResponseCodes::RESPONSE_TEXTS[$response->code] ?? 'Unknown error code',
             $response->body
         );
     }
