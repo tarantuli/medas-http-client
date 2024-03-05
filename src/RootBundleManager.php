@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\HttpClient;
 
-use Medas\Core\{Attributes\ConfigValue, Attributes\Service, Interfaces\DirectoryManager};
+use Medas\Core\{Attributes\ConfigValue, Attributes\Service, Interfaces\DirectoryCreator};
 
 #[Service]
 readonly class RootBundleManager
@@ -15,10 +15,10 @@ readonly class RootBundleManager
 
         #[ConfigValue(ConfigOptions\RootBundleSource::class)]
         private string   $source,
-        DirectoryManager $directoryManager,
+        DirectoryCreator $directoryCreator,
     )
     {
-        $directoryManager->create($this->directory);
+        $directoryCreator->create($this->directory);
     }
 
     public function path(): string
