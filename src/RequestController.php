@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Medas\HttpClient;
 
-use Medas\Core\Attributes\{ConfigValue, Service};
+use Medas\Core\Attributes\{ConfigValue, Entrypoint, Service};
 
-#[Service]
+#[Service, Entrypoint]
 readonly class RequestController
 {
     private \CurlHandle $handle;
