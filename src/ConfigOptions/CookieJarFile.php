@@ -10,7 +10,7 @@ use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup, Interfaces\ConfigOpt
 readonly class CookieJarFile implements ConfigOption
 {
     public function __construct(
-        private Group $group,
+        private HttpClientConfigGroup $group,
     )
     {
     }

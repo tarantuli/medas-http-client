@@ -7,7 +7,7 @@ namespace Medas\HttpClient\ConfigOptions;
 use Medas\Core\{Attributes\Service, Interfaces\ConfigGroup};
 
 #[Service]
-readonly class Group implements ConfigGroup
+readonly class HttpClientConfigGroup implements ConfigGroup
 {
     public function parent(): ConfigGroup|null
     {
