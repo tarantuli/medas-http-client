@@ -11,7 +11,7 @@ readonly class Response
         public string $rawBody,
         public mixed  $body,
         public string $header,
-        array         $curlInfo,
+        public array  $curlInfo,
     )
     {
     }
