@@ -45,10 +45,6 @@ readonly class BodyHandler
         switch ($this->stripCharset($contentType)) {
             case 'application/json':
             case 'text/json':
-                if (str_starts_with($rawBody, '$')) {
-                    $rawBody = substr($rawBody, 1);
-                }
-
                 return $this->jsonEncoder->decode($rawBody);
 
             case 'application/x-www-form-urlencoded':

@@ -11,16 +11,14 @@
         }
     ],
     "type": "library",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
-        "morphp/medas-core": "dev-dev",
-        "morphp/medas-json": "dev-dev",
+        "morphp/medas-core": "^3",
+        "morphp/medas-json": "^3",
         "ext-curl": "*"
     },
     "require-dev": {
-        "morphp/medas-service-manager": "dev-dev",
-        "phpunit/phpunit": "^9.5"
+        "morphp/medas-service-manager": "^3",
+        "phpunit/phpunit": "^10"
     },
     "autoload": {
         "psr-4": {

@@ -33,6 +33,24 @@ readonly class SimpleRequests
         return $this->requestController->execute($request);
     }
 
+    public function put(string $url, mixed $body, string $contentType = 'application/json'): Response
+    {
+        $request = new Request($url, 'PUT');
+
+        $request->body = new Body($body, $contentType);
+
+        return $this->requestController->execute($request);
+    }
+
+    public function patch(string $url, mixed $body, string $contentType = 'application/json'): Response
+    {
+        $request = new Request($url, 'PATCH');
+
+        $request->body = new Body($body, $contentType);
+
+        return $this->requestController->execute($request);
+    }
+
     public function delete(string $url, array $queryArguments = []): Response
     {
         $request = new Request($url, 'DELETE');

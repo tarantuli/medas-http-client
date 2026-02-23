@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\HttpClient;
 
-class Curl
+class CurlTransferInfoShape
 {
     const TRANSFER_INFO_SHAPE = [
         'url' => 'string',

@@ -14,7 +14,7 @@ readonly class Response
         public mixed  $body,
         public string $header,
 
-        #[ArrayShape(Curl::TRANSFER_INFO_SHAPE)]
+        #[ArrayShape(CurlTransferInfoShape::TRANSFER_INFO_SHAPE)]
         public array  $curlInfo,
     )
     {

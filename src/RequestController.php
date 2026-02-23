@@ -13,8 +13,8 @@ readonly class RequestController
 
     public function __construct(
         private BodyHandler        $bodyHandler,
-        private HeaderHandler      $headerHandler,
         private CookieHandler      $cookieHandler,
+        private HeaderHandler      $headerHandler,
         private ResponseController $responseController,
         RootBundleManager          $rootBundleManager,
 
@@ -68,6 +68,18 @@ readonly class RequestController
         curl_setopt($this->handle, CURLOPT_CUSTOMREQUEST, strtoupper($request->method));
     }
 
+    private function setUrl(Request $request): void
+    {
+        $url = $request->url;
+
+        if ($request->queryArguments) {
+            $url .= (str_contains($url, '?') ? '&' : '?')
+                . http_build_query($request->queryArguments);
+        }
+
+        curl_setopt($this->handle, CURLOPT_URL, $url);
+    }
+
     private function setBody(Request $request): void
     {
         if ($request->body === null) {
@@ -98,6 +110,7 @@ readonly class RequestController
 
     private function setCookies(Request $request): void
     {
+        // Set to '' when no cookies need to be set
         curl_setopt(
             $this->handle,
             CURLOPT_COOKIE,
@@ -107,13 +120,8 @@ readonly class RequestController
 
     private function setTimeouts(Request $request): void
     {
-        if ($request->connectionTimeout !== null) {
-            curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT_MS, $request->connectionTimeout);
-        }
-
-        if ($request->totalRequestTimeout !== null) {
-            curl_setopt($this->handle, CURLOPT_TIMEOUT_MS, $request->totalRequestTimeout);
-        }
+        curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT_MS, $request->connectionTimeout ?? 0);
+        curl_setopt($this->handle, CURLOPT_TIMEOUT_MS, $request->totalRequestTimeout ?? 0);
     }
 
     private function fetch(): Response
@@ -126,23 +134,7 @@ readonly class RequestController
 
         $info = curl_getinfo($this->handle);
 
-        if ($info['http_code'] === ResponseCodes::TEMPORARY_REDIRECT) {
-            $this->setUrl($info['url']);
-
-            return $this->fetch();
-        }
-
         return $this->responseController->create($response, $info);
-    }
-
-    private function setUrl(Request $request): void
-    {
-        if ($request->queryArguments) {
-            $request->url .= (str_contains($request->url, '?') ? '&' : '?')
-                . http_build_query($request->queryArguments);
-        }
-
-        curl_setopt($this->handle, CURLOPT_URL, $request->url);
     }
 
     private function checkForErrors(Request $request, Response $response): void
