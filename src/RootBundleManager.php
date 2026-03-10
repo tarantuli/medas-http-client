@@ -23,7 +23,6 @@ readonly class RootBundleManager
 
     public function path(): string
     {
-        // TODO: Implement pattern() method.
         $filename = $this->directory . '/cacert.pem';
         $path = realpath($filename);
 
