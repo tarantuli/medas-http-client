@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Medas\HttpClient;
 
-use Medas\Core\AsSingleton;
+use Medas\Core\{AsSingleton, BasePackage};
 use Medas\Json\JsonPackage;
-use Medas\ServiceManager\BasePackage;
 
 class HttpClientPackage extends BasePackage
 {

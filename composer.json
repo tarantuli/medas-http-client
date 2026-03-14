@@ -22,8 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Medas\\HttpClient\\": "src/",
-            "Medas\\HttpClientTest\\": "tests/"
+            "Medas\\HttpClient\\": "src/"
         }
+    },
+  "autoload-dev": {
+    "psr-4": {
+      "Medas\\HttpClientTest\\": "tests/"
     }
+  }
 }
