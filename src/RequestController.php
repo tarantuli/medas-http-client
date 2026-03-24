@@ -16,10 +16,16 @@ readonly class RequestController
         private CookieHandler      $cookieHandler,
         private HeaderHandler      $headerHandler,
         private ResponseController $responseController,
-        RootBundleManager          $rootBundleManager,
 
         #[ConfigValue(ConfigOptions\CookieJarFile::class)]
         string|null                $cookieJarFile,
+
+        #[ConfigValue(ConfigOptions\DefaultConnectionTimeout::class)]
+        private int                $defaultConnectionTimeout,
+
+        #[ConfigValue(ConfigOptions\DefaultTotalRequestTimeout::class)]
+        private int                $defaultTotalRequestTimeout,
+        RootBundleManager          $rootBundleManager,
     )
     {
         $this->handle = curl_init();
@@ -120,8 +126,17 @@ readonly class RequestController
 
     private function setTimeouts(Request $request): void
     {
-        curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT_MS, $request->connectionTimeout ?? 0);
-        curl_setopt($this->handle, CURLOPT_TIMEOUT_MS, $request->totalRequestTimeout ?? 0);
+        curl_setopt(
+            $this->handle,
+            CURLOPT_CONNECTTIMEOUT_MS,
+            $request->connectionTimeout ?? $this->defaultConnectionTimeout
+        );
+
+        curl_setopt(
+            $this->handle,
+            CURLOPT_TIMEOUT_MS,
+            $request->totalRequestTimeout ?? $this->defaultTotalRequestTimeout
+        );
     }
 
     private function fetch(): Response
