@@ -24,21 +24,20 @@ readonly class RootBundleManager
     public function path(): string
     {
         // TODO: Implement pattern() method.
-        $filename = $this->directory . '/cacert.pem';
-        $path = realpath($filename);
-
-        if ($path === false) {
+        if (false === $directory = realpath($this->directory)) {
             throw new Exceptions\CannotWriteToCacertPem($this->directory);
         }
 
-        if (!file_exists($filename)) {
+        $path = $directory . '/cacert.pem';
+
+        if (!file_exists($path)) {
             $contents = file_get_contents($this->source);
 
             if ($contents === false) {
                 throw new Exceptions\FailedToReadCacertSource($this->source);
             }
 
-            file_put_contents($filename, $contents);
+            file_put_contents($path, $contents);
         }
 
         return $path;
