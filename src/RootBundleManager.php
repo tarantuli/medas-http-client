@@ -23,7 +23,6 @@ readonly class RootBundleManager
 
     public function path(): string
     {
-        // TODO: Implement pattern() method.
         if (false === $directory = realpath($this->directory)) {
             throw new Exceptions\CannotWriteToCacertPem($this->directory);
         }
@@ -37,7 +36,9 @@ readonly class RootBundleManager
                 throw new Exceptions\FailedToReadCacertSource($this->source);
             }
 
-            file_put_contents($path, $contents);
+            if (false === file_put_contents($path, $contents)) {
+                throw new Exceptions\CannotWriteToCacertPem($this->directory);
+            }
         }
 
         return $path;
