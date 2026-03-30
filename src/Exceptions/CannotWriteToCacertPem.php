@@ -10,11 +10,11 @@ class CannotWriteToCacertPem extends BaseException
 {
     public function __construct(string $directory)
     {
-        parent::__construct($directory);
+        parent::__construct($directory, getcwd());
     }
 
     public function pattern(): string
     {
-        return 'Cannot write to cacert.pem in "%s"';
+        return 'Cannot write to cacert.pem in %s in %s';
     }
 }
