@@ -61,6 +61,7 @@ readonly class RequestController
         $this->setHeader($request);
         $this->setCookies($request);
         $this->setTimeouts($request);
+        $this->setOptions($request);
 
         $response = $this->fetch();
 
@@ -137,6 +138,13 @@ readonly class RequestController
             CURLOPT_TIMEOUT_MS,
             $request->totalRequestTimeout ?? $this->defaultTotalRequestTimeout
         );
+    }
+
+    private function setOptions(Request $request): void
+    {
+        $value = $request->enableCertificateRevocationCheck ? 0 : CURLSSLOPT_NO_REVOKE;
+
+        curl_setopt($this->handle, CURLOPT_SSL_OPTIONS, $value);
     }
 
     private function fetch(): Response

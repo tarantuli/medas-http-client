@@ -14,6 +14,7 @@ class Request
     public int|null /** milliseconds */ $totalRequestTimeout = null;
     public bool $throwExceptionOn4xx = true;
     public bool $throwExceptionOn5xx = true;
+    public bool $enableCertificateRevocationCheck = true;
 
     public function __construct(
         public string $url,
