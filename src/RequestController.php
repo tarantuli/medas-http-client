@@ -67,19 +67,21 @@ readonly class RequestController
         $verbosePath = null;
 
         if ($request->debug) {
-            $verbosePath = tempnam(sys_get_temp_dir(), 'curl_debug_');
-            $verboseFile = fopen($verbosePath, 'w+');
+            $verboseFile = tmpfile();
 
-            curl_setopt($this->handle, CURLOPT_VERBOSE, true);
-            curl_setopt($this->handle, CURLOPT_STDERR, $verboseFile);
+            if ($verboseFile !== false) {
+                $verbosePath = stream_get_meta_data($verboseFile)['uri'];
+
+                curl_setopt($this->handle, CURLOPT_VERBOSE, true);
+                curl_setopt($this->handle, CURLOPT_STDERR, $verboseFile);
+            }
         }
 
         $response = $this->fetch($verboseFile, $verbosePath);
 
         if ($verboseFile !== null) {
+            // tmpfile() deletes the file automatically on close
             fclose($verboseFile);
-
-            unlink($verbosePath);
 
             curl_setopt($this->handle, CURLOPT_VERBOSE, false);
         }
@@ -174,7 +176,9 @@ readonly class RequestController
         if ($verboseFile !== null && $verbosePath !== null) {
             fflush($verboseFile);
 
-            $debugInformation = file_get_contents($verbosePath);
+            rewind($verboseFile);
+
+            $debugInformation = stream_get_contents($verboseFile);
         }
 
         if ($response === false) {
