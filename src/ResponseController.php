@@ -17,10 +17,11 @@ readonly class ResponseController
     }
 
     public function create(
-        string $response,
+        string      $response,
 
         #[ArrayShape(CurlTransferInfoShape::TRANSFER_INFO_SHAPE)]
-        array  $info
+        array       $info,
+        string|null $debugInformation = null,
     ): Response
     {
         $responseCode = $info['http_code'];
@@ -28,7 +29,7 @@ readonly class ResponseController
         $rawBody = substr($response, $info['header_size']);
         $body = $this->bodyHandler->parseString($rawBody, $info['content_type']);
 
-        return new Response($responseCode, $rawBody, $body, $header, $info);
+        return new Response($responseCode, $rawBody, $body, $header, $info, $debugInformation);
     }
 
     private function determineHeader(string $response, $headerSize): string

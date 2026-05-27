@@ -15,6 +15,7 @@ class Request
     public bool $throwExceptionOn4xx = true;
     public bool $throwExceptionOn5xx = true;
     public bool $enableCertificateRevocationCheck = true;
+    public bool $debug = false;
 
     public function __construct(
         public string $url,

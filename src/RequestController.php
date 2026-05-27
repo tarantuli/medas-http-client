@@ -63,7 +63,22 @@ readonly class RequestController
         $this->setTimeouts($request);
         $this->setOptions($request);
 
-        $response = $this->fetch();
+        $verboseStream = null;
+
+        if ($request->debug) {
+            $verboseStream = fopen('php://temp', 'w+');
+
+            curl_setopt($this->handle, CURLOPT_VERBOSE, true);
+            curl_setopt($this->handle, CURLOPT_STDERR, $verboseStream);
+        }
+
+        $response = $this->fetch($verboseStream);
+
+        if ($verboseStream !== null) {
+            fclose($verboseStream);
+
+            curl_setopt($this->handle, CURLOPT_VERBOSE, false);
+        }
 
         $this->checkForErrors($request, $response);
 
@@ -147,7 +162,7 @@ readonly class RequestController
         curl_setopt($this->handle, CURLOPT_SSL_OPTIONS, $value);
     }
 
-    private function fetch(): Response
+    private function fetch(mixed $verboseStream = null): Response
     {
         $response = curl_exec($this->handle);
 
@@ -156,8 +171,15 @@ readonly class RequestController
         }
 
         $info = curl_getinfo($this->handle);
+        $debugInformation = null;
 
-        return $this->responseController->create($response, $info);
+        if ($verboseStream !== null) {
+            rewind($verboseStream);
+
+            $debugInformation = stream_get_contents($verboseStream);
+        }
+
+        return $this->responseController->create($response, $info, $debugInformation);
     }
 
     private function checkForErrors(Request $request, Response $response): void
