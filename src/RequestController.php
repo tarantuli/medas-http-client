@@ -165,12 +165,6 @@ readonly class RequestController
     private function fetch(mixed $verboseStream = null): Response
     {
         $response = curl_exec($this->handle);
-
-        if ($response === false) {
-            throw new Exceptions\CurlError(curl_errno($this->handle), curl_error($this->handle));
-        }
-
-        $info = curl_getinfo($this->handle);
         $debugInformation = null;
 
         if ($verboseStream !== null) {
@@ -178,6 +172,16 @@ readonly class RequestController
 
             $debugInformation = stream_get_contents($verboseStream);
         }
+
+        if ($response === false) {
+            throw new Exceptions\CurlError(
+                curl_errno($this->handle),
+                curl_error($this->handle),
+                $debugInformation
+            );
+        }
+
+        $info = curl_getinfo($this->handle);
 
         return $this->responseController->create($response, $info, $debugInformation);
     }
