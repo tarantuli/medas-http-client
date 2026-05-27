@@ -63,19 +63,23 @@ readonly class RequestController
         $this->setTimeouts($request);
         $this->setOptions($request);
 
-        $verboseStream = null;
+        $verboseFile = null;
+        $verbosePath = null;
 
         if ($request->debug) {
-            $verboseStream = fopen('php://temp', 'w+');
+            $verbosePath = tempnam(sys_get_temp_dir(), 'curl_debug_');
+            $verboseFile = fopen($verbosePath, 'w+');
 
             curl_setopt($this->handle, CURLOPT_VERBOSE, true);
-            curl_setopt($this->handle, CURLOPT_STDERR, $verboseStream);
+            curl_setopt($this->handle, CURLOPT_STDERR, $verboseFile);
         }
 
-        $response = $this->fetch($verboseStream);
+        $response = $this->fetch($verboseFile, $verbosePath);
 
-        if ($verboseStream !== null) {
-            fclose($verboseStream);
+        if ($verboseFile !== null) {
+            fclose($verboseFile);
+
+            unlink($verbosePath);
 
             curl_setopt($this->handle, CURLOPT_VERBOSE, false);
         }
@@ -162,15 +166,15 @@ readonly class RequestController
         curl_setopt($this->handle, CURLOPT_SSL_OPTIONS, $value);
     }
 
-    private function fetch(mixed $verboseStream = null): Response
+    private function fetch(mixed $verboseFile = null, string|null $verbosePath = null): Response
     {
         $response = curl_exec($this->handle);
         $debugInformation = null;
 
-        if ($verboseStream !== null) {
-            rewind($verboseStream);
+        if ($verboseFile !== null && $verbosePath !== null) {
+            fflush($verboseFile);
 
-            $debugInformation = stream_get_contents($verboseStream);
+            $debugInformation = file_get_contents($verbosePath);
         }
 
         if ($response === false) {
