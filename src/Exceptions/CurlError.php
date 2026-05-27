@@ -10,11 +10,11 @@ class CurlError extends BaseException
 {
     public function __construct(int $code, string $message, string|null $debugInformation = null)
     {
-        parent::__construct($code, $message, $debugInformation);
+        parent::__construct($code, $message, $debugInformation ? "\n\nDebug information:\n" . $debugInformation : '');
     }
 
     public function pattern(): string
     {
-        return 'cURL error: [%s] %s  %s';
+        return 'cURL error: [%s] %s%s';
     }
 }
