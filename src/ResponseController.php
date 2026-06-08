@@ -27,7 +27,18 @@ readonly class ResponseController
         $responseCode = $info['http_code'];
         $header = $this->determineHeader($response, $info['header_size']);
         $rawBody = substr($response, $info['header_size']);
-        $body = $this->bodyHandler->parseString($rawBody, $info['content_type']);
+
+        try {
+            $body = $this->bodyHandler->parseString($rawBody, $info['content_type']);
+        }
+        catch (\Throwable $e) {
+            $body = sprintf(
+                "%s\n\nFailed to parse body as content mimetype %s: %s\n",
+                $rawBody,
+                $info['content_type'],
+                $e->getMessage()
+            );
+        }
 
         return new Response($responseCode, $rawBody, $body, $header, $info, $debugInformation);
     }
