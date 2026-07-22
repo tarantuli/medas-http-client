@@ -14,6 +14,9 @@ use Medas\Core\{
 #[Service]
 readonly class RootBundleManager
 {
+    /** @var string[] */
+    private array $additionalCaBundles;
+
     public function __construct(
         #[ConfigValue(ConfigOptions\RootBundleDirectory::class)]
         private string   $directory,
@@ -22,10 +25,14 @@ readonly class RootBundleManager
         private string   $source,
 
         #[ConfigValue(ConfigOptions\AdditionalCaBundles::class)]
-        private array    $additionalCaBundles,
+        array|string     $additionalCaBundles,
         DirectoryCreator $directoryCreator,
     )
     {
+        $this->additionalCaBundles = is_array($additionalCaBundles)
+            ? $additionalCaBundles
+            : explode(',', $additionalCaBundles);
+
         $directoryCreator->create($this->directory);
     }
 
