@@ -29,9 +29,11 @@ readonly class RootBundleManager
         DirectoryCreator $directoryCreator,
     )
     {
-        $this->additionalCaBundles = is_array($additionalCaBundles)
+        $this->additionalCaBundles = array_filter(
+            is_array($additionalCaBundles)
             ? $additionalCaBundles
-            : explode(',', $additionalCaBundles);
+            : explode(',', $additionalCaBundles)
+        );
 
         $directoryCreator->create($this->directory);
     }
