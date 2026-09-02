@@ -7,7 +7,7 @@ namespace Medas\HttpClient;
 use Medas\Core\Attributes\{ConfigValue, Entrypoint, Service};
 
 #[Service, Entrypoint]
-readonly class RequestController
+readonly class RequestController implements Interfaces\RequestController
 {
     private \CurlHandle $handle;
 
