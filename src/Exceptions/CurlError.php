@@ -8,10 +8,14 @@ use Medas\Core\Exceptions\BaseException;
 
 class CurlError extends BaseException
 {
-    public function __construct(int $code, string $message, string|null $debugInformation = null)
+    public function __construct(
+        public readonly int $errorNumber,
+        string              $message,
+        string|null         $debugInformation = null,
+    )
     {
         parent::__construct(
-            $code,
+            $errorNumber,
             $message,
             $debugInformation ? "\n\nDebug information:\n" . $debugInformation : ''
         );
@@ -20,5 +24,10 @@ class CurlError extends BaseException
     public function pattern(): string
     {
         return 'cURL error: [%s] %s%s';
+    }
+
+    public function isTimeout(): bool
+    {
+        return $this->errorNumber === CURLE_OPERATION_TIMEDOUT;
     }
 }
