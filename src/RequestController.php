@@ -48,11 +48,6 @@ readonly class RequestController implements Interfaces\RequestController
         curl_setopt($this->handle, CURLOPT_CAINFO, $rootBundleManager->path());
     }
 
-    public function __destruct()
-    {
-        curl_close($this->handle);
-    }
-
     public function execute(Request $request): Response
     {
         $this->setMethod($request);
